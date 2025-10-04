@@ -1,6 +1,14 @@
 <resources>
-    <string name="app_name">SplitSmart_POE</string>
+    <string name="app_name">SplitSmart</string>
     <string name="logo_desc">SplitSmart Logo</string>
     <string name="login_title">LOGIN</string>
+    <string name="signup_title">SIGN UP</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="signup_button">Sign Up</string>
+    <string name="signup_footer">Already have an account? Login</string>
+
 </resources>
+
 
