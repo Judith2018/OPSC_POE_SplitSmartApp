@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 
@@ -22,15 +23,15 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        // Google Login Button - Placeholder
-        val googleLoginButton = findViewById<Button>(R.id.btnGoogleLogin)
-        googleLoginButton.setOnClickListener {
+        // For Google login (now a LinearLayout)
+        val googleLoginLayout = findViewById<LinearLayout>(R.id.btnGoogleLogin)
+        googleLoginLayout.setOnClickListener {
             Toast.makeText(this, "Google login - to be implemented", Toast.LENGTH_SHORT).show()
         }
 
-        // Apple Login Button - Placeholder
-        val appleLoginButton = findViewById<Button>(R.id.btnAppleLogin)
-        appleLoginButton.setOnClickListener {
+// For Apple login (now a LinearLayout)
+        val appleLoginLayout = findViewById<LinearLayout>(R.id.btnAppleLogin)
+        appleLoginLayout.setOnClickListener {
             Toast.makeText(this, "Apple login - to be implemented", Toast.LENGTH_SHORT).show()
         }
 
