@@ -1,0 +1,1147 @@
+Index: app/src/main/java/com/example/splitsmart_poe/LoginActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.splitsmart_poe\r\n\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.text.TextUtils\r\nimport android.util.Patterns\r\nimport android.widget.Button\r\nimport android.widget.LinearLayout\r\nimport android.widget.TextView\r\nimport android.widget.Toast\r\nimport com.example.splitsmart_poe.databinding.ActivityLoginBinding\r\nimport com.example.splitsmart_poe.ui.HomeActivity\r\nimport com.google.firebase.Firebase\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.auth.auth\r\n\r\nclass LoginActivity : BaseActivity() {\r\n    private var binding: ActivityLoginBinding? = null\r\n    private lateinit var auth: FirebaseAuth\r\n\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        binding = ActivityLoginBinding.inflate(layoutInflater)\r\n        setContentView(binding?.root)\r\n\r\n        auth = Firebase.auth\r\n\r\n        binding?.tvSignUp?.setOnClickListener {\r\n            startActivity(Intent(this, SignUpActivity::class.java))\r\n            finish()\r\n        }\r\n        binding?.forgotPassword?.setOnClickListener {\r\n            //startActivity(Intent(this, ForgetPassword::class.java))\r\n        }\r\n\r\n        // For Google login (now a LinearLayout)\r\n        val googleLoginLayout = findViewById<LinearLayout>(R.id.btnGoogleLogin)\r\n        googleLoginLayout.setOnClickListener {\r\n            Toast.makeText(this, \"Google login - to be implemented\", Toast.LENGTH_SHORT).show()\r\n        }\r\n\r\n// For Apple login (now a LinearLayout)\r\n        val appleLoginLayout = findViewById<LinearLayout>(R.id.btnAppleLogin)\r\n        appleLoginLayout.setOnClickListener {\r\n            Toast.makeText(this, \"Apple login - to be implemented\", Toast.LENGTH_SHORT).show()\r\n        }\r\n    }\r\n    private fun signInUser()\r\n    {\r\n        val email = binding?.etEmail?.text.toString()\r\n        val password = binding?.etPassword?.text.toString()\r\n        if(validateForm(email, password))\r\n        {\r\n            auth.signInWithEmailAndPassword(email,password)\r\n                .addOnCompleteListener { task ->\r\n                    if(task.isSuccessful)\r\n                    {\r\n                        startActivity(Intent(this, HomeActivity::class.java))\r\n                        finish()\r\n                        hideProgressBar()\r\n                    }else{\r\n                        showToast(this, \"Uanble to login! Please try again.\")\r\n                        hideProgressBar()\r\n                    }\r\n                }\r\n        }\r\n    }\r\n\r\n    private fun validateForm(\r\n        email: String,\r\n        password: String\r\n    ): Boolean\r\n    {\r\n        // Clear previous errors\r\n\r\n        binding?.etEmail?.error = null\r\n        binding?.etPassword?.error = null\r\n\r\n        return when {\r\n            TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {\r\n                binding?.etEmail?.error = \"Enter valid email address\"\r\n                false\r\n            }\r\n            TextUtils.isEmpty(password) -> {\r\n                binding?.etPassword?.error = \"Enter password\"\r\n                false\r\n            }\r\n            else -> true\r\n        }\r\n    }\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/splitsmart_poe/LoginActivity.kt b/app/src/main/java/com/example/splitsmart_poe/LoginActivity.kt
+--- a/app/src/main/java/com/example/splitsmart_poe/LoginActivity.kt	(revision a897ad8554afc7d0a3b9df757a7ea317f92a193a)
++++ b/app/src/main/java/com/example/splitsmart_poe/LoginActivity.kt	(date 1759774310539)
+@@ -3,37 +3,25 @@
+ import android.content.Intent
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+-import android.text.TextUtils
+-import android.util.Patterns
+ import android.widget.Button
+ import android.widget.LinearLayout
+ import android.widget.TextView
+ import android.widget.Toast
+-import com.example.splitsmart_poe.databinding.ActivityLoginBinding
+-import com.example.splitsmart_poe.ui.HomeActivity
+-import com.google.firebase.Firebase
+-import com.google.firebase.auth.FirebaseAuth
+-import com.google.firebase.auth.auth
+-
+-class LoginActivity : BaseActivity() {
+-    private var binding: ActivityLoginBinding? = null
+-    private lateinit var auth: FirebaseAuth
+ 
+-
++class LoginActivity : AppCompatActivity() {
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-        binding = ActivityLoginBinding.inflate(layoutInflater)
+-        setContentView(binding?.root)
++        setContentView(R.layout.activity_login)
+ 
+-        auth = Firebase.auth
++        // Login Button - Temporary mock login
++        val loginButton = findViewById<Button>(R.id.btnLogin)
++        loginButton.setOnClickListener {
+ 
+-        binding?.tvSignUp?.setOnClickListener {
+-            startActivity(Intent(this, SignUpActivity::class.java))
++            // TODO: Replace with real Firebase login later
++            val intent = Intent(this, HomeActivity::class.java)
++            startActivity(intent)
+             finish()
+         }
+-        binding?.forgotPassword?.setOnClickListener {
+-            //startActivity(Intent(this, ForgetPassword::class.java))
+-        }
+ 
+         // For Google login (now a LinearLayout)
+         val googleLoginLayout = findViewById<LinearLayout>(R.id.btnGoogleLogin)
+@@ -46,48 +34,12 @@
+         appleLoginLayout.setOnClickListener {
+             Toast.makeText(this, "Apple login - to be implemented", Toast.LENGTH_SHORT).show()
+         }
+-    }
+-    private fun signInUser()
+-    {
+-        val email = binding?.etEmail?.text.toString()
+-        val password = binding?.etPassword?.text.toString()
+-        if(validateForm(email, password))
+-        {
+-            auth.signInWithEmailAndPassword(email,password)
+-                .addOnCompleteListener { task ->
+-                    if(task.isSuccessful)
+-                    {
+-                        startActivity(Intent(this, HomeActivity::class.java))
+-                        finish()
+-                        hideProgressBar()
+-                    }else{
+-                        showToast(this, "Uanble to login! Please try again.")
+-                        hideProgressBar()
+-                    }
+-                }
+-        }
+-    }
+-
+-    private fun validateForm(
+-        email: String,
+-        password: String
+-    ): Boolean
+-    {
+-        // Clear previous errors
+ 
+-        binding?.etEmail?.error = null
+-        binding?.etPassword?.error = null
+-
+-        return when {
+-            TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+-                binding?.etEmail?.error = "Enter valid email address"
+-                false
+-            }
+-            TextUtils.isEmpty(password) -> {
+-                binding?.etPassword?.error = "Enter password"
+-                false
+-            }
+-            else -> true
++        // Sign Up Link - Go to SignUpActivity
++        val signUpText = findViewById<TextView>(R.id.tvSignUp)
++        signUpText.setOnClickListener {
++            val intent = Intent(this, SignUpActivity::class.java)
++            startActivity(intent)
+         }
+     }
+ }
+Index: app/src/main/res/layout/activity_home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.coordinatorlayout.widget.CoordinatorLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/soft_gray\">\r\n\r\n    <!-- Fragment container -->\r\n    <fragment\r\n        android:id=\"@+id/nav_host_fragment\"\r\n        android:name=\"androidx.navigation.fragment.NavHostFragment\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        app:navGraph=\"@navigation/nav_graph\"\r\n        app:defaultNavHost=\"true\" />\r\n\r\n    <!-- Floating Action Button (Add) -->\r\n    <com.google.android.material.floatingactionbutton.FloatingActionButton\r\n        android:id=\"@+id/fab_add\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"bottom|center_horizontal\"\r\n        android:layout_marginBottom=\"78dp\"\r\n        android:src=\"@drawable/ic_add\"\r\n        android:contentDescription=\"Add\"\r\n        app:backgroundTint=\"@color/maroon\"\r\n        app:tint=\"@color/white\" />\r\n\r\n    <!-- Bottom Navigation -->\r\n    <com.google.android.material.bottomnavigation.BottomNavigationView\r\n        android:id=\"@+id/bottom_nav\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"68dp\"\r\n        android:layout_gravity=\"bottom\"\r\n        app:menu=\"@menu/bottom_nav_menu\"\r\n        android:background=\"@color/white\"\r\n        app:itemIconTint=\"@color/maroon\"\r\n        app:itemTextColor=\"@color/muted_text\" />\r\n\r\n</androidx.coordinatorlayout.widget.CoordinatorLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_home.xml b/app/src/main/res/layout/activity_home.xml
+--- a/app/src/main/res/layout/activity_home.xml	(revision a897ad8554afc7d0a3b9df757a7ea317f92a193a)
++++ b/app/src/main/res/layout/activity_home.xml	(date 1759774088765)
+@@ -1,21 +1,18 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.coordinatorlayout.widget.CoordinatorLayout
+-    xmlns:android="http://schemas.android.com/apk/res/android"
++<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="@color/soft_gray">
++    android:background="#F5F5F5">
+ 
+-    <!-- Fragment container -->
+-    <fragment
+-        android:id="@+id/nav_host_fragment"
+-        android:name="androidx.navigation.fragment.NavHostFragment"
++    <!-- Fragment Container -->
++    <FrameLayout
++        android:id="@+id/fragment_container"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+-        app:navGraph="@navigation/nav_graph"
+-        app:defaultNavHost="true" />
++        android:layout_marginBottom="68dp" />
+ 
+-    <!-- Floating Action Button (Add) -->
++    <!-- Floating Action Button -->
+     <com.google.android.material.floatingactionbutton.FloatingActionButton
+         android:id="@+id/fab_add"
+         android:layout_width="wrap_content"
+@@ -23,19 +20,89 @@
+         android:layout_gravity="bottom|center_horizontal"
+         android:layout_marginBottom="78dp"
+         android:src="@drawable/ic_add"
+-        android:contentDescription="Add"
+-        app:backgroundTint="@color/maroon"
+-        app:tint="@color/white" />
++        app:backgroundTint="#800000"
++        app:tint="#FFFFFF" />
+ 
+     <!-- Bottom Navigation -->
+-    <com.google.android.material.bottomnavigation.BottomNavigationView
+-        android:id="@+id/bottom_nav"
++    <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="68dp"
+         android:layout_gravity="bottom"
+-        app:menu="@menu/bottom_nav_menu"
+-        android:background="@color/white"
+-        app:itemIconTint="@color/maroon"
+-        app:itemTextColor="@color/muted_text" />
++        android:background="#FFFFFF"
++        android:orientation="horizontal"
++        android:padding="8dp">
++
++        <!-- Home Button -->
++        <LinearLayout
++            android:id="@+id/btn_home"
++            android:layout_width="0dp"
++            android:layout_height="match_parent"
++            android:layout_weight="1"
++            android:orientation="vertical"
++            android:gravity="center"
++            android:background="?attr/selectableItemBackgroundBorderless">
+ 
+-</androidx.coordinatorlayout.widget.CoordinatorLayout>
++            <ImageView
++                android:layout_width="24dp"
++                android:layout_height="24dp"
++                android:src="@drawable/ic_home"
++                android:tint="#800000" />
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="Home"
++                android:textColor="#800000"
++                android:textSize="12sp" />
++        </LinearLayout>
++
++        <!-- Groups Button -->
++        <LinearLayout
++            android:id="@+id/btn_groups"
++            android:layout_width="0dp"
++            android:layout_height="match_parent"
++            android:layout_weight="1"
++            android:orientation="vertical"
++            android:gravity="center"
++            android:background="?attr/selectableItemBackgroundBorderless">
++
++            <ImageView
++                android:layout_width="24dp"
++                android:layout_height="24dp"
++                android:src="@drawable/ic_groups"
++                android:tint="#666666" />
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="Groups"
++                android:textColor="#666666"
++                android:textSize="12sp" />
++        </LinearLayout>
++
++        <!-- Settings Button -->
++        <LinearLayout
++            android:id="@+id/btn_settings"
++            android:layout_width="0dp"
++            android:layout_height="match_parent"
++            android:layout_weight="1"
++            android:orientation="vertical"
++            android:gravity="center"
++            android:background="?attr/selectableItemBackgroundBorderless">
++
++            <ImageView
++                android:layout_width="24dp"
++                android:layout_height="24dp"
++                android:src="@drawable/ic_settings"
++                android:tint="#666666" />
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="Settings"
++                android:textColor="#666666"
++                android:textSize="12sp" />
++        </LinearLayout>
++
++    </LinearLayout>
++</androidx.coordinatorlayout.widget.CoordinatorLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/splitsmart_poe/AddExpenseFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.splitsmart_poe.ui\r\n\r\nimport android.os.Bundle\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.fragment.app.Fragment\r\nimport com.example.splitsmart_poe.R\r\n\r\nclass AddExpenseFragment : Fragment() {\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?\r\n    ): View? = inflater.inflate(R.layout.fragment_add_expense, container, false)\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/splitsmart_poe/AddExpenseFragment.kt b/app/src/main/java/com/example/splitsmart_poe/AddExpenseFragment.kt
+--- a/app/src/main/java/com/example/splitsmart_poe/AddExpenseFragment.kt	(revision a897ad8554afc7d0a3b9df757a7ea317f92a193a)
++++ b/app/src/main/java/com/example/splitsmart_poe/AddExpenseFragment.kt	(date 1759774088765)
+@@ -1,14 +1,85 @@
+-package com.example.splitsmart_poe.ui
++package com.example.splitsmart_poe
+ 
+ import android.os.Bundle
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
++import android.widget.Toast
+ import androidx.fragment.app.Fragment
+-import com.example.splitsmart_poe.R
++import com.example.splitsmart_poe.databinding.FragmentAddExpenseBinding
+ 
+ class AddExpenseFragment : Fragment() {
+-    override fun onCreateView(
+-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+-    ): View? = inflater.inflate(R.layout.fragment_add_expense, container, false)
+-}
++
++    private var _binding: FragmentAddExpenseBinding? = null
++    private val binding get() = _binding!!
++    private var expensesList: MutableList<Expense>? = null
++
++    companion object {
++        fun newInstance(expenses: MutableList<Expense>): AddExpenseFragment {
++            val fragment = AddExpenseFragment()
++            fragment.expensesList = expenses
++            return fragment
++        }
++    }
++
++    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
++        _binding = FragmentAddExpenseBinding.inflate(inflater, container, false)
++        return binding.root
++    }
++
++    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(view, savedInstanceState)
++
++        binding.btnSaveExpense.setOnClickListener {
++            saveExpense()
++        }
++
++        binding.btnCancel.setOnClickListener {
++            // Go back to HomeFragment
++            (activity as? HomeActivity)?.loadFragment(
++                HomeFragment.newInstance(emptyList(), expensesList ?: emptyList())
++            )
++        }
++    }
++
++    private fun saveExpense() {
++        val expenseName = binding.etExpenseName.text.toString().trim()
++        val paidBy = binding.etPaidBy.text.toString().trim()
++        val amountText = binding.etAmount.text.toString().trim()
++
++        if (expenseName.isEmpty() || paidBy.isEmpty() || amountText.isEmpty()) {
++            Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT).show()
++            return
++        }
++
++        val amount = amountText.toDoubleOrNull()
++        if (amount == null || amount <= 0) {
++            Toast.makeText(requireContext(), "Please enter a valid amount", Toast.LENGTH_SHORT).show()
++            return
++        }
++
++        // Create and add new expense
++        val newExpense = Expense(expenseName, "Paid by $paidBy", amount)
++        expensesList?.add(0, newExpense) // Add to beginning of list
++
++        Toast.makeText(requireContext(), "Expense added successfully!", Toast.LENGTH_SHORT).show()
++
++        // Go back to HomeFragment to see the new expense
++        (activity as? HomeActivity)?.loadFragment(
++            HomeFragment.newInstance(emptyList(), expensesList ?: emptyList())
++        )
++
++        // TODO: Role 1 - Replace with Firebase save
++        // FirebaseAuth.getInstance().currentUser?.uid?.let { userId ->
++        //     FirebaseFirestore.getInstance().collection("expenses")
++        //         .add(newExpense.toMap())
++        //         .addOnSuccessListener { /* Success */ }
++        //         .addOnFailureListener { /* Handle error */ }
++        // }
++    }
++
++    override fun onDestroyView() {
++        super.onDestroyView()
++        _binding = null
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_groups.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<FrameLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/soft_gray\"\r\n    android:gravity=\"center\">\r\n\r\n    <TextView\r\n        android:text=\"Groups Fragment\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:textSize=\"18sp\"\r\n        android:textStyle=\"bold\"\r\n        android:textColor=\"@color/maroon\"\r\n        android:layout_gravity=\"center\"/>\r\n</FrameLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_groups.xml b/app/src/main/res/layout/fragment_groups.xml
+--- a/app/src/main/res/layout/fragment_groups.xml	(revision a897ad8554afc7d0a3b9df757a7ea317f92a193a)
++++ b/app/src/main/res/layout/fragment_groups.xml	(date 1759774088765)
+@@ -1,16 +1,72 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="@color/soft_gray"
+-    android:gravity="center">
++    android:background="#F5F5F5"
++    android:padding="24dp">
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:orientation="vertical">
+ 
+-    <TextView
+-        android:text="Groups Fragment"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:textSize="18sp"
+-        android:textStyle="bold"
+-        android:textColor="@color/maroon"
+-        android:layout_gravity="center"/>
+-</FrameLayout>
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Create New Group"
++            android:textColor="#333333"
++            android:textSize="24sp"
++            android:textStyle="bold"
++            android:layout_marginBottom="32dp"/>
++
++        <!-- Group Name -->
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Group Name"
++            android:textColor="#333333"
++            android:textSize="16sp"
++            android:layout_marginBottom="8dp"/>
++
++        <EditText
++            android:id="@+id/et_group_name"
++            android:layout_width="match_parent"
++            android:layout_height="56dp"
++            android:background="@drawable/edittext_background"
++            android:padding="16dp"
++            android:hint="e.g., OPSC6312, Trip to Korea, Clubbing"
++            android:textSize="16sp"
++            android:layout_marginBottom="32dp"/>
++
++        <!-- Buttons -->
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:orientation="horizontal">
++
++            <Button
++                android:id="@+id/btn_back"
++                android:layout_width="0dp"
++                android:layout_height="56dp"
++                android:layout_weight="1"
++                android:background="@drawable/button_outline_background"
++                android:text="Back"
++                android:textColor="#800000"
++                android:textSize="16sp"
++                android:layout_marginEnd="8dp"/>
++
++            <Button
++                android:id="@+id/btn_create_group"
++                android:layout_width="0dp"
++                android:layout_height="56dp"
++                android:layout_weight="1"
++                android:background="#800000"
++                android:text="Create Group"
++                android:textColor="#FFFFFF"
++                android:textSize="16sp"
++                android:layout_marginStart="8dp"/>
++
++        </LinearLayout>
++
++    </LinearLayout>
++</ScrollView>
+Index: app/src/main/java/com/example/splitsmart_poe/GroupsFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.splitsmart_poe.ui\r\n\r\nimport android.os.Bundle\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.fragment.app.Fragment\r\nimport com.example.splitsmart_poe.R\r\n\r\nclass GroupsFragment : Fragment() {\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?\r\n    ): View? = inflater.inflate(R.layout.fragment_groups, container, false)\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/splitsmart_poe/GroupsFragment.kt b/app/src/main/java/com/example/splitsmart_poe/GroupsFragment.kt
+--- a/app/src/main/java/com/example/splitsmart_poe/GroupsFragment.kt	(revision a897ad8554afc7d0a3b9df757a7ea317f92a193a)
++++ b/app/src/main/java/com/example/splitsmart_poe/GroupsFragment.kt	(date 1759774088765)
+@@ -1,14 +1,78 @@
+-package com.example.splitsmart_poe.ui
++package com.example.splitsmart_poe
+ 
+ import android.os.Bundle
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
++import android.widget.Toast
+ import androidx.fragment.app.Fragment
+-import com.example.splitsmart_poe.R
++import com.example.splitsmart_poe.databinding.FragmentGroupsBinding
+ 
+ class GroupsFragment : Fragment() {
+-    override fun onCreateView(
+-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+-    ): View? = inflater.inflate(R.layout.fragment_groups, container, false)
+-}
++
++    private var _binding: FragmentGroupsBinding? = null
++    private val binding get() = _binding!!
++    private var groupsList: MutableList<String>? = null
++
++    companion object {
++        fun newInstance(groups: MutableList<String>): GroupsFragment {
++            val fragment = GroupsFragment()
++            fragment.groupsList = groups
++            return fragment
++        }
++    }
++
++    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
++        _binding = FragmentGroupsBinding.inflate(inflater, container, false)
++        return binding.root
++    }
++
++    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(view, savedInstanceState)
++
++        binding.btnCreateGroup.setOnClickListener {
++            createNewGroup()
++        }
++
++        binding.btnBack.setOnClickListener {
++            // Go back to HomeFragment
++            (activity as? HomeActivity)?.loadFragment(
++                HomeFragment.newInstance(groupsList ?: emptyList(), emptyList())
++            )
++        }
++    }
++
++    private fun createNewGroup() {
++        val groupName = binding.etGroupName.text.toString().trim()
++
++        if (groupName.isEmpty()) {
++            Toast.makeText(requireContext(), "Please enter a group name", Toast.LENGTH_SHORT).show()
++            return
++        }
++
++        // Add new group
++        groupsList?.add(groupName)
++        Toast.makeText(requireContext(), "Group '$groupName' created!", Toast.LENGTH_SHORT).show()
++
++        // Clear input
++        binding.etGroupName.text.clear()
++
++        // Go back to HomeFragment to see the new group
++        (activity as? HomeActivity)?.loadFragment(
++            HomeFragment.newInstance(groupsList ?: emptyList(), emptyList())
++        )
++
++        // TODO: Role 1 - Replace with Firebase save
++        // FirebaseAuth.getInstance().currentUser?.uid?.let { userId ->
++        //     FirebaseFirestore.getInstance().collection("groups")
++        //         .add(hashMapOf("name" to groupName, "members" to listOf(userId)))
++        //         .addOnSuccessListener { /* Success */ }
++        //         .addOnFailureListener { /* Handle error */ }
++        // }
++    }
++
++    override fun onDestroyView() {
++        super.onDestroyView()
++        _binding = null
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/drawable/edittext_background.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/edittext_background.xml b/app/src/main/res/drawable/edittext_background.xml
+new file mode 100644
+--- /dev/null	(date 1759774088765)
++++ b/app/src/main/res/drawable/edittext_background.xml	(date 1759774088765)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<shape xmlns:android="http://schemas.android.com/apk/res/android">
++    <solid android:color="#FFFFFF" />
++    <corners android:radius="8dp" />
++    <stroke
++        android:width="1dp"
++        android:color="#DDDDDD" />
++</shape>
+\ No newline at end of file
+Index: app/src/main/java/com/example/splitsmart_poe/HomeFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.splitsmart_poe.ui\r\n\r\nimport android.app.AlertDialog\r\nimport android.os.Bundle\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.EditText\r\nimport androidx.fragment.app.Fragment\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport com.example.splitsmart_poe.R\r\nimport com.example.splitsmart_poe.model.Expense\r\nimport com.example.splitsmart_poe.model.Group\r\nimport com.google.android.material.snackbar.Snackbar\r\n\r\nclass HomeFragment : Fragment() {\r\n\r\n    private lateinit var groupAdapter: GroupAdapter\r\n    private lateinit var recentAdapter: RecentActivityAdapter\r\n    private val groups = mutableListOf<Group>()\r\n    private val expenses = mutableListOf<Expense>()\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?\r\n    ): View? {\r\n        val v = inflater.inflate(R.layout.fragment_home, container, false)\r\n\r\n        // Groups RecyclerView\r\n        val rvGroups = v.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_groups)\r\n        groupAdapter = GroupAdapter(groups)\r\n        rvGroups.layoutManager =\r\n            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)\r\n        rvGroups.adapter = groupAdapter\r\n\r\n        // Recent RecyclerView\r\n        val rvRecent = v.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_recent)\r\n        recentAdapter = RecentActivityAdapter(expenses)\r\n        rvRecent.layoutManager = LinearLayoutManager(requireContext())\r\n        rvRecent.adapter = recentAdapter\r\n\r\n        return v\r\n    }\r\n\r\n    /** Called from FAB in HomeActivity */\r\n    fun showAddOptions() {\r\n        val builder = AlertDialog.Builder(requireContext())\r\n        builder.setTitle(\"Select Option\")\r\n        val options = arrayOf(\"New Group\", \"Expense Details\")\r\n        builder.setItems(options) { _, which ->\r\n            when (which) {\r\n                0 -> showNewGroupDialog()\r\n                1 -> showExpenseDialog()\r\n            }\r\n        }\r\n        builder.show()\r\n    }\r\n\r\n    private fun showNewGroupDialog() {\r\n        val input = EditText(requireContext())\r\n        input.hint = \"Group Name\"\r\n        AlertDialog.Builder(requireContext())\r\n            .setTitle(\"New Group\")\r\n            .setView(input)\r\n            .setPositiveButton(\"Save\") { _, _ ->\r\n                val name = input.text.toString().trim()\r\n                if (name.isNotEmpty()) {\r\n                    val g = Group(name = name)\r\n                    groups.add(g)\r\n                    groupAdapter.updateData(groups)\r\n                    Snackbar.make(requireView(), \"Group added\", Snackbar.LENGTH_SHORT).show()\r\n                    // TODO: Role1 → Save group to Firestore under user UID\r\n                }\r\n            }\r\n            .setNegativeButton(\"Cancel\", null)\r\n            .show()\r\n    }\r\n\r\n    private fun showExpenseDialog() {\r\n        val layout = layoutInflater.inflate(R.layout.dialog_expense_details, null)\r\n        val etName = layout.findViewById<EditText>(R.id.et_expense_name)\r\n        val etPaidBy = layout.findViewById<EditText>(R.id.et_paid_by)\r\n        val etAmount = layout.findViewById<EditText>(R.id.et_amount)\r\n\r\n        AlertDialog.Builder(requireContext())\r\n            .setTitle(\"Expense Details\")\r\n            .setView(layout)\r\n            .setPositiveButton(\"Save\") { _, _ ->\r\n                val name = etName.text.toString().trim()\r\n                val payer = etPaidBy.text.toString().trim()\r\n                val amount = etAmount.text.toString().toDoubleOrNull() ?: 0.0\r\n                if (name.isNotEmpty() && payer.isNotEmpty() && amount > 0) {\r\n                    val e = Expense(title = name, subtitle = \"Paid by $payer\", amount = amount)\r\n                    expenses.add(e)\r\n                    recentAdapter.updateData(expenses)\r\n                    Snackbar.make(requireView(), \"Expense added\", Snackbar.LENGTH_SHORT).show()\r\n                    // TODO: Role1 → Save expense to Firestore\r\n                }\r\n            }\r\n            .setNegativeButton(\"Cancel\", null)\r\n            .show()\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/splitsmart_poe/HomeFragment.kt b/app/src/main/java/com/example/splitsmart_poe/HomeFragment.kt
+--- a/app/src/main/java/com/example/splitsmart_poe/HomeFragment.kt	(revision a897ad8554afc7d0a3b9df757a7ea317f92a193a)
++++ b/app/src/main/java/com/example/splitsmart_poe/HomeFragment.kt	(date 1759774088765)
+@@ -1,102 +1,69 @@
+-package com.example.splitsmart_poe.ui
++package com.example.splitsmart_poe
+ 
+-import android.app.AlertDialog
+ import android.os.Bundle
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
+-import android.widget.EditText
+ import androidx.fragment.app.Fragment
+ import androidx.recyclerview.widget.LinearLayoutManager
+-import com.example.splitsmart_poe.R
++import androidx.recyclerview.widget.RecyclerView
++import com.example.splitsmart_poe.databinding.FragmentHomeBinding
+ import com.example.splitsmart_poe.model.Expense
+-import com.example.splitsmart_poe.model.Group
+-import com.google.android.material.snackbar.Snackbar
++import com.example.splitsmart_poe.ui.GroupAdapter
++import com.example.splitsmart_poe.ui.RecentActivityAdapter
+ 
+ class HomeFragment : Fragment() {
+ 
+-    private lateinit var groupAdapter: GroupAdapter
+-    private lateinit var recentAdapter: RecentActivityAdapter
+-    private val groups = mutableListOf<Group>()
+-    private val expenses = mutableListOf<Expense>()
++    private var _binding: FragmentHomeBinding? = null
++    private val binding get() = _binding!!
++    private lateinit var groupsAdapter: GroupAdapter
++    private lateinit var expensesAdapter: RecentActivityAdapter
++    private var groupsList: List<String> = emptyList()
++    private var expensesList: List<Expense> = emptyList()
++
++    companion object {
++        fun newInstance(groups: List<String>, expenses: List<Expense>): HomeFragment {
++            val fragment = HomeFragment()
++            val args = Bundle()
++            // In real app, pass data via ViewModel - this is simplified for POE
++            return fragment
++        }
++    }
+ 
+-    override fun onCreateView(
+-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+-    ): View? {
+-        val v = inflater.inflate(R.layout.fragment_home, container, false)
++    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
++        _binding = FragmentHomeBinding.inflate(inflater, container, false)
++        return binding.root
++    }
+ 
++    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(view, savedInstanceState)
++
++        setupRecyclerViews()
++        updateUI()
++    }
++
++    private fun setupRecyclerViews() {
+         // Groups RecyclerView
+-        val rvGroups = v.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_groups)
+-        groupAdapter = GroupAdapter(groups)
+-        rvGroups.layoutManager =
+-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+-        rvGroups.adapter = groupAdapter
+-
+-        // Recent RecyclerView
+-        val rvRecent = v.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_recent)
+-        recentAdapter = RecentActivityAdapter(expenses)
+-        rvRecent.layoutManager = LinearLayoutManager(requireContext())
+-        rvRecent.adapter = recentAdapter
++        groupsAdapter = GroupAdapter(groupsList)
++        binding.rvGroups.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
++        binding.rvGroups.adapter = groupsAdapter
+ 
+-        return v
++        // Expenses RecyclerView
++        expensesAdapter = RecentActivityAdapter(expensesList)
++        binding.rvRecentActivity.layoutManager = LinearLayoutManager(requireContext())
++        binding.rvRecentActivity.adapter = expensesAdapter
+     }
+ 
+-    /** Called from FAB in HomeActivity */
+-    fun showAddOptions() {
+-        val builder = AlertDialog.Builder(requireContext())
+-        builder.setTitle("Select Option")
+-        val options = arrayOf("New Group", "Expense Details")
+-        builder.setItems(options) { _, which ->
+-            when (which) {
+-                0 -> showNewGroupDialog()
+-                1 -> showExpenseDialog()
+-            }
+-        }
+-        builder.show()
+-    }
++    private fun updateUI() {
++        binding.tvGreeting.text = "Hi, User"
++        binding.tvBalance.text = "R150.00"
+ 
+-    private fun showNewGroupDialog() {
+-        val input = EditText(requireContext())
+-        input.hint = "Group Name"
+-        AlertDialog.Builder(requireContext())
+-            .setTitle("New Group")
+-            .setView(input)
+-            .setPositiveButton("Save") { _, _ ->
+-                val name = input.text.toString().trim()
+-                if (name.isNotEmpty()) {
+-                    val g = Group(name = name)
+-                    groups.add(g)
+-                    groupAdapter.updateData(groups)
+-                    Snackbar.make(requireView(), "Group added", Snackbar.LENGTH_SHORT).show()
+-                    // TODO: Role1 → Save group to Firestore under user UID
+-                }
+-            }
+-            .setNegativeButton("Cancel", null)
+-            .show()
++        groupsAdapter.updateData(groupsList)
++        expensesAdapter.updateData(expensesList)
+     }
+-
+-    private fun showExpenseDialog() {
+-        val layout = layoutInflater.inflate(R.layout.dialog_expense_details, null)
+-        val etName = layout.findViewById<EditText>(R.id.et_expense_name)
+-        val etPaidBy = layout.findViewById<EditText>(R.id.et_paid_by)
+-        val etAmount = layout.findViewById<EditText>(R.id.et_amount)
+ 
+-        AlertDialog.Builder(requireContext())
+-            .setTitle("Expense Details")
+-            .setView(layout)
+-            .setPositiveButton("Save") { _, _ ->
+-                val name = etName.text.toString().trim()
+-                val payer = etPaidBy.text.toString().trim()
+-                val amount = etAmount.text.toString().toDoubleOrNull() ?: 0.0
+-                if (name.isNotEmpty() && payer.isNotEmpty() && amount > 0) {
+-                    val e = Expense(title = name, subtitle = "Paid by $payer", amount = amount)
+-                    expenses.add(e)
+-                    recentAdapter.updateData(expenses)
+-                    Snackbar.make(requireView(), "Expense added", Snackbar.LENGTH_SHORT).show()
+-                    // TODO: Role1 → Save expense to Firestore
+-                }
+-            }
+-            .setNegativeButton("Cancel", null)
+-            .show()
++    override fun onDestroyView() {
++        super.onDestroyView()
++        _binding = null
+     }
+ }
+Index: app/src/main/res/layout/fragment_add_expense.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<FrameLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/soft_gray\"\r\n    android:gravity=\"center\">\r\n\r\n    <TextView\r\n        android:text=\"Add Expense Fragment\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:textSize=\"18sp\"\r\n        android:textStyle=\"bold\"\r\n        android:textColor=\"@color/maroon\"/>\r\n</FrameLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_add_expense.xml b/app/src/main/res/layout/fragment_add_expense.xml
+--- a/app/src/main/res/layout/fragment_add_expense.xml	(revision a897ad8554afc7d0a3b9df757a7ea317f92a193a)
++++ b/app/src/main/res/layout/fragment_add_expense.xml	(date 1759774088765)
+@@ -1,15 +1,111 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="@color/soft_gray"
+-    android:gravity="center">
++    android:background="#F5F5F5"
++    android:padding="24dp">
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:orientation="vertical">
+ 
+-    <TextView
+-        android:text="Add Expense Fragment"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:textSize="18sp"
+-        android:textStyle="bold"
+-        android:textColor="@color/maroon"/>
+-</FrameLayout>
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Add New Expense"
++            android:textColor="#333333"
++            android:textSize="24sp"
++            android:textStyle="bold"
++            android:layout_marginBottom="32dp"/>
++
++        <!-- Expense Name -->
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Expense Name"
++            android:textColor="#333333"
++            android:textSize="16sp"
++            android:layout_marginBottom="8dp"/>
++
++        <EditText
++            android:id="@+id/et_expense_name"
++            android:layout_width="match_parent"
++            android:layout_height="56dp"
++            android:background="@drawable/edittext_background"
++            android:padding="16dp"
++            android:hint="e.g., Dinner, Groceries, Lift Club"
++            android:textSize="16sp"
++            android:layout_marginBottom="24dp"/>
++
++        <!-- Who Paid -->
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Who Paid"
++            android:textColor="#333333"
++            android:textSize="16sp"
++            android:layout_marginBottom="8dp"/>
++
++        <EditText
++            android:id="@+id/et_paid_by"
++            android:layout_width="match_parent"
++            android:layout_height="56dp"
++            android:background="@drawable/edittext_background"
++            android:padding="16dp"
++            android:hint="e.g., You, Julie, Meena"
++            android:textSize="16sp"
++            android:layout_marginBottom="24dp"/>
++
++        <!-- Amount -->
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Amount"
++            android:textColor="#333333"
++            android:textSize="16sp"
++            android:layout_marginBottom="8dp"/>
++
++        <EditText
++            android:id="@+id/et_amount"
++            android:layout_width="match_parent"
++            android:layout_height="56dp"
++            android:background="@drawable/edittext_background"
++            android:padding="16dp"
++            android:hint="e.g., 100.00"
++            android:inputType="numberDecimal"
++            android:textSize="16sp"
++            android:layout_marginBottom="32dp"/>
++
++        <!-- Buttons -->
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:orientation="horizontal">
++
++            <Button
++                android:id="@+id/btn_cancel"
++                android:layout_width="0dp"
++                android:layout_height="56dp"
++                android:layout_weight="1"
++                android:background="@drawable/button_outline_background"
++                android:text="Cancel"
++                android:textColor="#800000"
++                android:textSize="16sp"
++                android:layout_marginEnd="8dp"/>
++
++            <Button
++                android:id="@+id/btn_save_expense"
++                android:layout_width="0dp"
++                android:layout_height="56dp"
++                android:layout_weight="1"
++                android:background="#800000"
++                android:text="Save Expense"
++                android:textColor="#FFFFFF"
++                android:textSize="16sp"
++                android:layout_marginStart="8dp"/>
++
++        </LinearLayout>
++
++    </LinearLayout>
++</ScrollView>
+\ No newline at end of file
+Index: app/src/main/java/com/example/splitsmart_poe/HomeActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.splitsmart_poe.ui\r\n\r\nimport android.os.Bundle\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.navigation.findNavController\r\nimport androidx.navigation.ui.setupWithNavController\r\nimport com.example.splitsmart_poe.R\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView\r\nimport com.google.android.material.floatingactionbutton.FloatingActionButton\r\n\r\nclass HomeActivity : AppCompatActivity() {\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_home)\r\n\r\n        val navController = findNavController(R.id.nav_host_fragment)\r\n        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)\r\n        val fab = findViewById<FloatingActionButton>(R.id.fab_add)\r\n\r\n        // Link bottom nav to navigation graph\r\n        bottomNav.setupWithNavController(navController)\r\n\r\n        // FAB triggers dialog logic in HomeFragment (if visible)\r\n        fab.setOnClickListener {\r\n            // We’ll handle the actual dialogs inside HomeFragment\r\n            val currentFragment = supportFragmentManager\r\n                .findFragmentById(R.id.nav_host_fragment)\r\n                ?.childFragmentManager\r\n                ?.fragments\r\n                ?.firstOrNull()\r\n\r\n            if (currentFragment is HomeFragment) {\r\n                currentFragment.showAddOptions()\r\n            }\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/splitsmart_poe/HomeActivity.kt b/app/src/main/java/com/example/splitsmart_poe/HomeActivity.kt
+--- a/app/src/main/java/com/example/splitsmart_poe/HomeActivity.kt	(revision a897ad8554afc7d0a3b9df757a7ea317f92a193a)
++++ b/app/src/main/java/com/example/splitsmart_poe/HomeActivity.kt	(date 1759774088765)
+@@ -1,38 +1,69 @@
+-package com.example.splitsmart_poe.ui
++package com.example.splitsmart_poe
+ 
+-import android.os.Bundle
++import android.content.Intent
+ import androidx.appcompat.app.AppCompatActivity
+-import androidx.navigation.findNavController
+-import androidx.navigation.ui.setupWithNavController
+-import com.example.splitsmart_poe.R
+-import com.google.android.material.bottomnavigation.BottomNavigationView
+-import com.google.android.material.floatingactionbutton.FloatingActionButton
++import android.os.Bundle
++import android.widget.ImageButton
++import androidx.fragment.app.Fragment
++import com.example.splitsmart_poe.databinding.ActivityHomeBinding
++import com.example.splitsmart_poe.model.Expense
++
+ 
+ class HomeActivity : AppCompatActivity() {
+ 
++    private lateinit var binding: ActivityHomeBinding
++    private val groupsList = mutableListOf<String>()
++    private val expensesList = mutableListOf<Expense>()
++
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-        setContentView(R.layout.activity_home)
++        binding = ActivityHomeBinding.inflate(layoutInflater)
++        setContentView(binding.root)
++
++        // Load HomeFragment by default
++        loadFragment(HomeFragment.newInstance(groupsList, expensesList))
++
++        setupBottomNavigation()
++        setupFAB()
++
++        loadSampleData() // Remove later - for testing
++    }
+ 
+-        val navController = findNavController(R.id.nav_host_fragment)
+-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
+-        val fab = findViewById<FloatingActionButton>(R.id.fab_add)
++    private fun setupBottomNavigation() {
++        binding.btnHome.setOnClickListener {
++            loadFragment(HomeFragment.newInstance(groupsList, expensesList))
++        }
+ 
+-        // Link bottom nav to navigation graph
+-        bottomNav.setupWithNavController(navController)
++        binding.btnGroups.setOnClickListener {
++            loadFragment(GroupsFragment.newInstance(groupsList))
++        }
+ 
+-        // FAB triggers dialog logic in HomeFragment (if visible)
+-        fab.setOnClickListener {
+-            // We’ll handle the actual dialogs inside HomeFragment
+-            val currentFragment = supportFragmentManager
+-                .findFragmentById(R.id.nav_host_fragment)
+-                ?.childFragmentManager
+-                ?.fragments
+-                ?.firstOrNull()
++        binding.btnSettings.setOnClickListener {
++            loadFragment(SettingsFragment())
++        }
++    }
+ 
+-            if (currentFragment is HomeFragment) {
+-                currentFragment.showAddOptions()
+-            }
+-        }
++    private fun setupFAB() {
++        binding.fabAdd.setOnClickListener {
++            loadFragment(AddExpenseFragment.newInstance(expensesList))
++        }
++    }
++
++    private fun loadFragment(fragment: Fragment) {
++        supportFragmentManager.beginTransaction()
++            .replace(R.id.fragment_container, fragment)
++            .commit()
+     }
+-}
++
++    private fun loadSampleData() {
++        groupsList.add("OPSC6312")
++        expensesList.add(Expense("Lift Club", "Paid by you", 100.00.toString()))
++        expensesList.add(Expense("Dinner", "Paid by Julie", 100.00.toString()))
++        expensesList.add(Expense("Groceries", "Paid by Meena", 100.00.toString()))
++    }
++
++    companion object {
++        const val ADD_EXPENSE_REQUEST = 1
++        const val CREATE_GROUP_REQUEST = 2
++    }
++}
+\ No newline at end of file
+Index: app/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    alias(libs.plugins.android.application)\r\n    alias(libs.plugins.kotlin.android)\r\n    id(\"com.google.gms.google-services\")\r\n\r\n}\r\n\r\nandroid {\r\n    namespace = \"com.example.splitsmart_poe\"\r\n    compileSdk = 34\r\n\r\n    defaultConfig {\r\n        applicationId = \"com.example.splitsmart_poe\"\r\n        minSdk = 24\r\n        targetSdk = 35\r\n        versionCode = 1\r\n        versionName = \"1.0\"\r\n\r\n        testInstrumentationRunner = \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            isMinifyEnabled = false\r\n            proguardFiles(\r\n                getDefaultProguardFile(\"proguard-android-optimize.txt\"),\r\n                \"proguard-rules.pro\"\r\n            )\r\n        }\r\n    }\r\n\r\n    compileOptions {\r\n        sourceCompatibility = JavaVersion.VERSION_11\r\n        targetCompatibility = JavaVersion.VERSION_11\r\n    }\r\n\r\n    kotlinOptions {\r\n        jvmTarget = \"11\"\r\n    }\r\n    buildFeatures{\r\n        viewBinding = true\r\n    }\r\n}\r\n\r\ndependencies {\r\n    // Android Core (COMPATIBLE VERSIONS)\r\n    implementation(\"androidx.core:core-ktx:1.12.0\")\r\n    implementation(\"androidx.appcompat:appcompat:1.6.1\")\r\n    implementation(\"com.google.android.material:material:1.9.0\")\r\n    implementation(\"androidx.constraintlayout:constraintlayout:2.1.4\")\r\n\r\n    // Navigation Component\r\n    implementation(\"androidx.navigation:navigation-fragment-ktx:2.7.7\")\r\n    implementation(\"androidx.navigation:navigation-ui-ktx:2.7.7\")\r\n\r\n    // RecyclerView & CardView\r\n    implementation(\"androidx.recyclerview:recyclerview:1.3.1\")\r\n    implementation(\"androidx.cardview:cardview:1.0.0\")\r\n\r\n    // Lifecycle (optional)\r\n    implementation(\"androidx.lifecycle:lifecycle-livedata-ktx:2.6.2\")\r\n    implementation(\"androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2\")\r\n\r\n    // Firebase (commented for now)\r\n    implementation(platform(\"com.google.firebase:firebase-bom:34.3.0\"))\r\n    implementation(\"com.google.firebase:firebase-auth\")\r\n    // implementation 'com.google.firebase:firebase-firestore'\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts	(revision a897ad8554afc7d0a3b9df757a7ea317f92a193a)
++++ b/app/build.gradle.kts	(date 1759774088765)
+@@ -4,18 +4,22 @@
+     id("com.google.gms.google-services")
+ 
+ }
+-
+ android {
+     namespace = "com.example.splitsmart_poe"
+     compileSdk = 34
+ 
++    // REPLACE dataBinding with viewBinding
++    buildFeatures {
++        viewBinding = true
++        // REMOVE dataBinding = true
++    }
++
+     defaultConfig {
+         applicationId = "com.example.splitsmart_poe"
+         minSdk = 24
+         targetSdk = 35
+         versionCode = 1
+         versionName = "1.0"
+-
+         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+     }
+ 
+Index: app/src/main/res/layout/fragment_home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.core.widget.NestedScrollView\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/soft_gray\"\r\n    android:padding=\"12dp\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\">\r\n\r\n        <!-- Greeting -->\r\n        <TextView\r\n            android:id=\"@+id/tv_greeting\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"\"\r\n            android:textSize=\"20sp\"\r\n            android:textStyle=\"bold\"\r\n            android:textColor=\"@color/text_primary\"\r\n            android:layout_marginTop=\"8dp\"\r\n            android:layout_marginBottom=\"8dp\"/>\r\n\r\n        <!-- You are owed card -->\r\n        <androidx.cardview.widget.CardView\r\n            android:id=\"@+id/card_balance\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"110dp\"\r\n            app:cardCornerRadius=\"12dp\"\r\n            app:cardElevation=\"3dp\"\r\n            android:padding=\"16dp\"\r\n            android:layout_marginBottom=\"16dp\">\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\"\r\n                android:orientation=\"vertical\"\r\n                android:gravity=\"center_vertical\">\r\n\r\n                <TextView\r\n                    android:text=\"YOU ARE OWED\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:textSize=\"12sp\"\r\n                    android:textColor=\"@color/muted_text\"\r\n                    android:textAllCaps=\"true\"/>\r\n\r\n                <TextView\r\n                    android:id=\"@+id/tv_balance\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"\"\r\n                    android:textSize=\"28sp\"\r\n                    android:textStyle=\"bold\"\r\n                    android:textColor=\"@color/maroon\"\r\n                    android:layout_marginTop=\"6dp\"/>\r\n\r\n                <TextView\r\n                    android:id=\"@+id/tv_balance_sub\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"\"\r\n                    android:textSize=\"12sp\"\r\n                    android:textColor=\"@color/muted_text\"\r\n                    android:layout_marginTop=\"4dp\"/>\r\n            </LinearLayout>\r\n        </androidx.cardview.widget.CardView>\r\n\r\n        <!-- Groups -->\r\n        <TextView\r\n            android:text=\"GROUPS\"\r\n            android:textAllCaps=\"true\"\r\n            android:textSize=\"12sp\"\r\n            android:textColor=\"@color/muted_text\"\r\n            android:layout_marginBottom=\"4dp\"/>\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/rv_groups\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"88dp\"\r\n            android:orientation=\"horizontal\"\r\n            android:layout_marginBottom=\"16dp\"/>\r\n\r\n        <!-- Recent Activity -->\r\n        <TextView\r\n            android:text=\"RECENT ACTIVITY\"\r\n            android:textAllCaps=\"true\"\r\n            android:textSize=\"12sp\"\r\n            android:textColor=\"@color/muted_text\"\r\n            android:layout_marginBottom=\"4dp\"/>\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/rv_recent\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:nestedScrollingEnabled=\"false\"/>\r\n    </LinearLayout>\r\n</androidx.core.widget.NestedScrollView>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_home.xml b/app/src/main/res/layout/fragment_home.xml
+--- a/app/src/main/res/layout/fragment_home.xml	(revision a897ad8554afc7d0a3b9df757a7ea317f92a193a)
++++ b/app/src/main/res/layout/fragment_home.xml	(date 1759774088765)
+@@ -1,99 +1,92 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.core.widget.NestedScrollView
+-    xmlns:android="http://schemas.android.com/apk/res/android"
++<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="@color/soft_gray"
+-    android:padding="12dp">
++    android:background="#F5F5F5"
++    android:padding="16dp">
+ 
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="vertical">
+ 
+-        <!-- Greeting -->
++        <!-- Hi, User -->
+         <TextView
+             android:id="@+id/tv_greeting"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:text=""
+-            android:textSize="20sp"
++            android:text="Hi, User"
++            android:textColor="#333333"
++            android:textSize="24sp"
+             android:textStyle="bold"
+-            android:textColor="@color/text_primary"
+-            android:layout_marginTop="8dp"
+-            android:layout_marginBottom="8dp"/>
++            android:layout_marginBottom="16dp"/>
+ 
+-        <!-- You are owed card -->
++        <!-- YOU ARE OWED Card -->
+         <androidx.cardview.widget.CardView
+-            android:id="@+id/card_balance"
+             android:layout_width="match_parent"
+             android:layout_height="110dp"
++            android:layout_marginBottom="24dp"
+             app:cardCornerRadius="12dp"
+-            app:cardElevation="3dp"
+-            android:padding="16dp"
+-            android:layout_marginBottom="16dp">
++            app:cardElevation="4dp">
+ 
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:orientation="vertical"
+-                android:gravity="center_vertical">
++                android:gravity="center_vertical"
++                android:padding="16dp">
+ 
+                 <TextView
+-                    android:text="YOU ARE OWED"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
++                    android:text="YOU ARE OWED"
++                    android:textColor="#666666"
+                     android:textSize="12sp"
+-                    android:textColor="@color/muted_text"
+                     android:textAllCaps="true"/>
+ 
+                 <TextView
+                     android:id="@+id/tv_balance"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+-                    android:text=""
++                    android:text="R150.00"
++                    android:textColor="#800000"
+                     android:textSize="28sp"
+                     android:textStyle="bold"
+-                    android:textColor="@color/maroon"
+-                    android:layout_marginTop="6dp"/>
+-
+-                <TextView
+-                    android:id="@+id/tv_balance_sub"
+-                    android:layout_width="wrap_content"
+-                    android:layout_height="wrap_content"
+-                    android:text=""
+-                    android:textSize="12sp"
+-                    android:textColor="@color/muted_text"
+-                    android:layout_marginTop="4dp"/>
++                    android:layout_marginTop="8px"/>
+             </LinearLayout>
+         </androidx.cardview.widget.CardView>
+ 
+-        <!-- Groups -->
++        <!-- GROUPS Section -->
+         <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
+             android:text="GROUPS"
++            android:textColor="#666666"
++            android:textSize="12sp"
+             android:textAllCaps="true"
+-            android:textSize="12sp"
+-            android:textColor="@color/muted_text"
+-            android:layout_marginBottom="4dp"/>
++            android:layout_marginBottom="8dp"/>
++
+         <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/rv_groups"
+             android:layout_width="match_parent"
+             android:layout_height="88dp"
+-            android:orientation="horizontal"
+-            android:layout_marginBottom="16dp"/>
++            android:layout_marginBottom="24dp"/>
+ 
+-        <!-- Recent Activity -->
++        <!-- RECENT ACTIVITY Section -->
+         <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
+             android:text="RECENT ACTIVITY"
++            android:textColor="#666666"
++            android:textSize="12sp"
+             android:textAllCaps="true"
+-            android:textSize="12sp"
+-            android:textColor="@color/muted_text"
+-            android:layout_marginBottom="4dp"/>
++            android:layout_marginBottom="8dp"/>
++
+         <androidx.recyclerview.widget.RecyclerView
+-            android:id="@+id/rv_recent"
++            android:id="@+id/rv_recent_activity"
+             android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:nestedScrollingEnabled="false"/>
++            android:layout_height="wrap_content"/>
++
+     </LinearLayout>
+-</androidx.core.widget.NestedScrollView>
++</ScrollView>
+\ No newline at end of file
