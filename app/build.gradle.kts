@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    // Uncomment when ready for Firebase:
-    // id("com.google.gms.google-services")
+    id("com.google.gms.google-services")
+
 }
 
 android {
@@ -37,6 +37,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures{
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -59,8 +62,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
     // Firebase (commented for now)
-    // implementation platform('com.google.firebase:firebase-bom:32.7.2')
-    // implementation 'com.google.firebase:firebase-auth'
+    implementation(platform("com.google.firebase:firebase-bom:34.3.0"))
+    implementation("com.google.firebase:firebase-auth")
     // implementation 'com.google.firebase:firebase-firestore'
 }
 
