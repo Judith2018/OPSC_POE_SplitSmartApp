@@ -1,99 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/soft_gray"
-    android:padding="12dp">
+    android:background="#F5F5F5"
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Greeting -->
+        <!-- Hi, User -->
         <TextView
             android:id="@+id/tv_greeting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="20sp"
+            android:text="Hi, User"
+            android:textColor="#333333"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="16dp"/>
 
-        <!-- You are owed card -->
+        <!-- YOU ARE OWED Card -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_balance"
             android:layout_width="match_parent"
             android:layout_height="110dp"
+            android:layout_marginBottom="24dp"
             app:cardCornerRadius="12dp"
-            app:cardElevation="3dp"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp">
+            app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:padding="16dp">
 
                 <TextView
-                    android:text="YOU ARE OWED"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="YOU ARE OWED"
+                    android:textColor="#666666"
                     android:textSize="12sp"
-                    android:textColor="@color/muted_text"
                     android:textAllCaps="true"/>
 
                 <TextView
                     android:id="@+id/tv_balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="R150.00"
+                    android:textColor="#800000"
                     android:textSize="28sp"
                     android:textStyle="bold"
-                    android:textColor="@color/maroon"
-                    android:layout_marginTop="6dp"/>
-
-                <TextView
-                    android:id="@+id/tv_balance_sub"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="12sp"
-                    android:textColor="@color/muted_text"
-                    android:layout_marginTop="4dp"/>
+                    android:layout_marginTop="8px"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Groups -->
+        <!-- GROUPS Section -->
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="GROUPS"
-            android:textAllCaps="true"
+            android:textColor="#666666"
             android:textSize="12sp"
-            android:textColor="@color/muted_text"
-            android:layout_marginBottom="4dp"/>
+            android:textAllCaps="true"
+            android:layout_marginBottom="8dp"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_groups"
             android:layout_width="match_parent"
             android:layout_height="88dp"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="24dp"/>
 
-        <!-- Recent Activity -->
+        <!-- RECENT ACTIVITY Section -->
         <TextView
-            android:text="RECENT ACTIVITY"
-            android:textAllCaps="true"
-            android:textSize="12sp"
-            android:textColor="@color/muted_text"
-            android:layout_marginBottom="4dp"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_recent"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"/>
+            android:text="RECENT ACTIVITY"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            android:layout_marginBottom="8dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recent_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</ScrollView>

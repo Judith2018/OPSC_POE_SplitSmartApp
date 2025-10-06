@@ -1,38 +1,69 @@
-package com.example.splitsmart_poe.ui
+package com.example.splitsmart_poe
 
-import android.os.Bundle
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.example.splitsmart_poe.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import android.os.Bundle
+import android.widget.ImageButton
+import androidx.fragment.app.Fragment
+import com.example.splitsmart_poe.databinding.ActivityHomeBinding
+import com.example.splitsmart_poe.model.Expense
+
 
 class HomeActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityHomeBinding
+    private val groupsList = mutableListOf<String>()
+    private val expensesList = mutableListOf<Expense>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val navController = findNavController(R.id.nav_host_fragment)
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
-        val fab = findViewById<FloatingActionButton>(R.id.fab_add)
+        // Load HomeFragment by default
+        loadFragment(HomeFragment.newInstance(groupsList, expensesList))
 
-        // Link bottom nav to navigation graph
-        bottomNav.setupWithNavController(navController)
+        setupBottomNavigation()
+        setupFAB()
 
-        // FAB triggers dialog logic in HomeFragment (if visible)
-        fab.setOnClickListener {
-            // We’ll handle the actual dialogs inside HomeFragment
-            val currentFragment = supportFragmentManager
-                .findFragmentById(R.id.nav_host_fragment)
-                ?.childFragmentManager
-                ?.fragments
-                ?.firstOrNull()
+        loadSampleData() // Remove later - for testing
+    }
 
-            if (currentFragment is HomeFragment) {
-                currentFragment.showAddOptions()
-            }
+    private fun setupBottomNavigation() {
+        binding.btnHome.setOnClickListener {
+            loadFragment(HomeFragment.newInstance(groupsList, expensesList))
         }
+
+        binding.btnGroups.setOnClickListener {
+            loadFragment(GroupsFragment.newInstance(groupsList))
+        }
+
+        binding.btnSettings.setOnClickListener {
+            loadFragment(SettingsFragment())
+        }
+    }
+
+    private fun setupFAB() {
+        binding.fabAdd.setOnClickListener {
+            loadFragment(AddExpenseFragment.newInstance(expensesList))
+        }
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
+    }
+
+    private fun loadSampleData() {
+        groupsList.add("OPSC6312")
+        expensesList.add(Expense("Lift Club", "Paid by you", 100.00.toString()))
+        expensesList.add(Expense("Dinner", "Paid by Julie", 100.00.toString()))
+        expensesList.add(Expense("Groceries", "Paid by Meena", 100.00.toString()))
+    }
+
+    companion object {
+        const val ADD_EXPENSE_REQUEST = 1
+        const val CREATE_GROUP_REQUEST = 2
     }
 }

@@ -4,10 +4,15 @@ plugins {
     // Uncomment when ready for Firebase:
     // id("com.google.gms.google-services")
 }
-
 android {
     namespace = "com.example.splitsmart_poe"
     compileSdk = 34
+
+    // REPLACE dataBinding with viewBinding
+    buildFeatures {
+        viewBinding = true
+        // REMOVE dataBinding = true
+    }
 
     defaultConfig {
         applicationId = "com.example.splitsmart_poe"
@@ -15,7 +20,6 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
         // Sign Up Link - Go to SignUpActivity
         val signUpText = findViewById<TextView>(R.id.tvSignUp)
         signUpText.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
+            //val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
     }
