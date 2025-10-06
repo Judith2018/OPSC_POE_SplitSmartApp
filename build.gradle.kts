@@ -8,13 +8,10 @@ plugins {
 
 buildscript {
     dependencies {
-        // Firebase plugin (keep it ready for later)
+        classpath("com.android.tools.build:gradle:8.8.2")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
         classpath("com.google.gms:google-services:4.4.1")
     }
 }
-
-// No 'repositories' or 'allprojects' blocks here!
-// Gradle 8 uses settings.gradle.kts for repository management.
-
 
 

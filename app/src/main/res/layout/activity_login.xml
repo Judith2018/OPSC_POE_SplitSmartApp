@@ -131,7 +131,7 @@
                 android:layout_height="24dp"
                 android:src="@drawable/ic_apple"
                 android:layout_marginEnd="12dp"
-                android:tint="#FFFFFF" />
+                app:tint="@color/card_bg" />
 
             <TextView
                 android:layout_width="wrap_content"
