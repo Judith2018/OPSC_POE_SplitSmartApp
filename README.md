@@ -1,40 +1,67 @@
-# OPSC_POE_SplitSmartApp
-SplitSmart is a collaborative expense tracking app built with Kotlin, Android Studio, and Firebase. It helps users split costs, manage groups, and settle shared expenses with clarity and ease.
+SplitSmart App
 
-Features
 
-- User registration and login with encrypted passwords
-- Group creation and member management
-- Expense logging and settlement calculation
-- Notifications and export options
-- User settings and preferences
-- Gamification elements (badges, progress indicators)
+Course: OPSC POE
+Platform: Android Studio (Kotlin + XML)
+Language Support: English & Multilingual
+Offline Support: Enabled
+Notifications: Implemented for alerts, updates, and deletions
 
-Tech Stack
+Overview
 
-- Frontend: Kotlin, Android Studio
-- Backend: Firebase (Firestore, Authentication, Cloud Messaging)
-- API: RESTful endpoints (custom or third-party)
-- Libraries: Encryption, UI components, etc.
+SplitSmart is an intuitive Android app designed to simplify the process of splitting expenses, managing shared costs, and maintaining transparent financial records between multiple users. The app allows users to manage their budgets both online and offline, ensuring accessibility even without an active internet connection.
 
-Setup Instructions
+It includes a Settings Fragment for language preferences, notifications, and data synchronization options. The app’s clean interface and efficient Kotlin-based backend ensure smooth performance and usability.
 
-1. Clone this repository  
-2. Open the project in Android Studio  
-3. Connect to Firebase using your team’s credentials  
-4. Run the app on an emulator or physical device
+ Key Features
 
-Demo Video
+ Multi-language Support – Change app language dynamically from settings.
 
-A demonstration video will be added here showing the app in action, including:
-- Registration and login
-- Group and expense management
-- Data stored in Firebase and API
-- Voice-over walkthrough
+ Notifications System – Alerts users about updates, deletions, and new data.
 
-Documentation
+offline Sync – Saves and updates data even without an internet connection.
 
-This repo includes:
-- Planning & Design document (PDF or Markdown)
-- UML diagrams and Figma prototypes
-- GitHub Actions setup 
+ Settings Fragment – Manage preferences and notifications.
+
+ Expense Tracking – Add, edit, and view all shared expenses.
+
+ Data Persistence – Stores data locally with Room Database for offline reliability.
+
+ Tech Stack
+Component	Technology
+Programming Language	Kotlin
+UI Layouts	XML
+IDE	Android Studio
+Database	Room (Offline Persistence)
+Notifications	Android Notification Manager
+Version Control	GitHub
+Logging	Android Logcat (Log.d / Log.i / Log.e)
+AI Acknowledgement
+
+During the development of SplitSmart, ChatGPT (OpenAI GPT-5) was used as a supporting tool for debugging, clarifying syntax errors, optimizing Kotlin code structure, and designing the app logo concept.
+All AI-assisted content was reviewed, tested, and understood before integration.
+See the full AI acknowledgment section in the project documentation or Word submission.
+ Video Demonstration
+
+Video Presentation (Unlisted YouTube Link):
+Click here to view the demo
+
+(The video includes a walkthrough of all app features, showing the UI, settings fragment, multilingual options, offline sync, and notification functionality.)
+
+ How to Run the App
+
+Clone the repository:
+
+git clone https://github.com/yourusername/SplitSmartApp.git
+
+
+Open the project in Android Studio.
+
+Sync Gradle files.
+
+Run the app on an emulator or Android device.
+
+🧾 Logging Example
+Log.d("SplitSmart", "Expense added successfully: $expenseName")
+Log.i("SyncManager", "Offline data synced with server")
+Log.e("NotificationService", "Error displaying notification: ${e.message}")
