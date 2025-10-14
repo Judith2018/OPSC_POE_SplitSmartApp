@@ -48,6 +48,17 @@ https://youtube.com/@itexpert-oe8qt?si=Syb9RG_Wd0zy9iX0
 
 (The video includes a walkthrough of all app features, showing the UI, settings fragment, multilingual options, offline sync, and notification functionality.)
 
+Screenshots of the app:
+Welcome page ~ <img width="330" height="595" alt="ss_welcome 1" src="https://github.com/user-attachments/assets/e895ae54-beb6-4c0d-b861-2704b22cd108" />
+Login page ~ <img width="408" height="727" alt="ss_login 1" src="https://github.com/user-attachments/assets/be65543b-9b73-4f64-b6de-35de23f90d03" />
+Sign up page ~ <img width="330" height="591" alt="ss_signup 1" src="https://github.com/user-attachments/assets/a9c9bfea-bf9d-4b77-84c4-92481b27831c" />
+View Group Page ~ <img width="333" height="595" alt="ss_viewGroup 1" src="https://github.com/user-attachments/assets/7be1d805-db1f-438f-90b4-760908bdd010" />
+Add expense ~ <img width="330" height="593" alt="ss_addExpense 1" src="https://github.com/user-attachments/assets/16b86dd0-940e-4501-aeeb-9ed7cd8b813a" />
+Recent activity~ <img width="333" height="595" alt="ss_recentActivity 1" src="https://github.com/user-attachments/assets/9fc9984f-9e66-4f61-b2f6-de9cf2193d55" />
+Add group ~ <img width="332" height="596" alt="ss_addGroup 1" src="https://github.com/user-attachments/assets/88192f48-2343-4c01-9640-4103f306a75b" />
+Home page~ <img width="333" height="592" alt="ss_1stPage 1" src="https://github.com/user-attachments/assets/e5326805-4bac-4462-8923-e4479a67263c" />
+View expense ~ <img width="331" height="591" alt="ss_viewExpense 1" src="https://github.com/user-attachments/assets/566b7409-6420-4c5d-82a7-d14425411928" />
+
  How to Run the App
 
 Clone the repository:
