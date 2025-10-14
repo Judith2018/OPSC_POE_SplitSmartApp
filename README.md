@@ -44,7 +44,7 @@ See the full AI acknowledgment section in the project documentation or Word subm
  Video Demonstration
 
 Video Presentation (Unlisted YouTube Link):
-Click here to view the demo
+https://youtube.com/@itexpert-oe8qt?si=Syb9RG_Wd0zy9iX0
 
 (The video includes a walkthrough of all app features, showing the UI, settings fragment, multilingual options, offline sync, and notification functionality.)
 
