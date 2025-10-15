@@ -58,6 +58,8 @@ Recent activity~ <img width="333" height="595" alt="ss_recentActivity 1" src="ht
 Add group ~ <img width="332" height="596" alt="ss_addGroup 1" src="https://github.com/user-attachments/assets/88192f48-2343-4c01-9640-4103f306a75b" />
 Home page~ <img width="333" height="592" alt="ss_1stPage 1" src="https://github.com/user-attachments/assets/e5326805-4bac-4462-8923-e4479a67263c" />
 View expense ~ <img width="331" height="591" alt="ss_viewExpense 1" src="https://github.com/user-attachments/assets/566b7409-6420-4c5d-82a7-d14425411928" />
+firebase_user registered ~ <img width="1831" height="919" alt="firebase_view" src="https://github.com/user-attachments/assets/9a0416fe-e58a-42ce-9fb6-fc33d7fd8993" />
+
 
  How to Run the App
 
